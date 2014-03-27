@@ -15,6 +15,13 @@ Set Up
 * Build and Run
 
 
+TODO
+----
+* Start at login
+* Share files
+* Edit image
+
+
 Thanks
 ----
 Thanks to [@eyeplum](https://twitter.com/eyeplum), he made an icon for the App.
