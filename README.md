@@ -17,7 +17,6 @@ Set Up
 
 TODO
 ----
-* Start at login
 * Share files
 * Edit image
 

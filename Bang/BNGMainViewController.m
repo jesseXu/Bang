@@ -10,12 +10,23 @@
 #import "BNGBarItemWindowController.h"
 #import "BNGTableCell.h"
 
+#import <ServiceManagement/ServiceManagement.h>
+
+
+static NSString * const kUserDefaultsLoginAtStartKey    = @"StartAtLoginKey";
+static NSString * const kParseShareTableName            = @"ShareTable";
+static NSString * const kParseShareTableUserKey         = @"User";
+static NSString * const kParseShareTableFileKey         = @"File";
+static NSString * const kParseShareTableTypeKey         = @"Type";
+static NSString * const kParseShareTableTitleKey        = @"Title";
+
+
 @interface BNGMainViewController () <NSTableViewDataSource, NSTableViewDelegate>
 
-@property (weak) IBOutlet NSTableView *tableView;
-@property (weak) IBOutlet NSTextField *statusLabel;
-@property (weak) IBOutlet NSButton *addButton;
-@property (strong) IBOutlet NSMenu *preferenceMenu;
+@property (weak) IBOutlet NSTableView   *tableView;
+@property (weak) IBOutlet NSTextField   *statusLabel;
+@property (weak) IBOutlet NSButton      *addButton;
+@property (strong) IBOutlet NSMenu      *preferenceMenu;
 
 @property (assign, nonatomic) BOOL isUploading;
 @property (strong, nonatomic) NSMutableArray *items;
@@ -49,6 +60,12 @@
 #pragma mark - Actions
 
 - (IBAction)preferenceAction:(NSButton *)sender {
+
+    // set start at login value
+    int startAtLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultsLoginAtStartKey] intValue];
+    [(NSButton *)[self.preferenceMenu.itemArray objectAtIndex:0] setState:startAtLogin];
+    
+    // pop up menu
     NSPoint location = [sender convertPoint:NSMakePoint(10, NSMaxY(sender.frame)) fromView:nil];
     NSEvent *event =  [NSEvent mouseEventWithType:NSLeftMouseDown
                                          location:location
@@ -78,7 +95,7 @@
 - (IBAction)linkAction:(id)sender {
     NSInteger row = [self.tableView rowForView:sender];
     PFObject *item = [self.items objectAtIndex:row];
-    PFFile *file = item[@"imageFile"];
+    PFFile *file = item[kParseShareTableFileKey];
 
     // copy url to pasteboard
     NSPasteboard *pboard = [NSPasteboard generalPasteboard];
@@ -106,8 +123,20 @@
 #pragma mark - Menu Actions
 
 - (IBAction)startAtLoginAction:(id)sender {
+    NSButton *button = sender;
+    if (button.state == NSOffState) { // ON
+        if (SMLoginItemSetEnabled ((__bridge CFStringRef)@"com.damarc.Helper", YES)) {
+            button.state = NSOnState;
+        }
+    } else {
+        if (SMLoginItemSetEnabled ((__bridge CFStringRef)@"com.damarc.Helper", NO)) {
+            button.state = NSOffState;
+        }
+    }
     
+    [[NSUserDefaults standardUserDefaults] setObject:@(button.state) forKey:kUserDefaultsLoginAtStartKey];
 }
+
 
 - (IBAction)signOutAction:(id)sender {
 
@@ -121,6 +150,7 @@
     // change to login view
     [[BNGBarItemWindowController sharedController] changeToLoginViewController];
 }
+
 
 - (IBAction)quitAction:(id)sender {
     [[NSApplication sharedApplication] terminate:nil];
@@ -166,10 +196,10 @@
             // then save object
             [self updateStatus:@"Saving.." shouldHide:NO];
 
-            PFObject *screenCapture = [PFObject objectWithClassName:@"UserFiles"];
-            screenCapture[@"imageName"] = fileName;
-            screenCapture[@"imageFile"] = imageFile;
-            screenCapture[@"user"] = [PFUser currentUser];
+            PFObject *screenCapture = [PFObject objectWithClassName:kParseShareTableName];
+            screenCapture[kParseShareTableTitleKey] = fileName;
+            screenCapture[kParseShareTableFileKey] = imageFile;
+            screenCapture[kParseShareTableUserKey] = [PFUser currentUser];
             
             PFACL *acl = [PFACL ACLWithUser:[PFUser currentUser]];
             [acl setPublicReadAccess:YES];
@@ -209,8 +239,8 @@
 
 
 - (void)fetchUserItems {
-    PFQuery *query = [PFQuery queryWithClassName:@"UserFiles"];
-    [query whereKey:@"user" equalTo:[PFUser currentUser]];
+    PFQuery *query = [PFQuery queryWithClassName:kParseShareTableName];
+    [query whereKey:kParseShareTableUserKey equalTo:[PFUser currentUser]];
     [query orderByDescending:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
@@ -257,7 +287,7 @@
     BNGTableCell *cell = [tableView makeViewWithIdentifier:@"BNGTableCell" owner:self];
    
     PFObject *item = [self.items objectAtIndex:row];
-    cell.nameLabel.stringValue = item[@"imageName"];
+    cell.nameLabel.stringValue = item[kParseShareTableTitleKey];
     cell.timeLabel.stringValue = [item.createdAt description];
     
     return cell;
@@ -277,7 +307,7 @@
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
     if ([self.tableView selectedRow] != -1) {
         PFObject *item = [self.items objectAtIndex:[self.tableView selectedRow]];
-        PFFile *imageFile = item[@"imageFile"];
+        PFFile *imageFile = item[kParseShareTableFileKey];
         [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:imageFile.url]];
     }
 }
