@@ -59,8 +59,10 @@
 {
     [super windowDidLoad];
     
-    self.window.level = NSStatusWindowLevel;
-    self.window.delegate = self;
+    NSPanel *panel = (NSPanel *)[self window];
+    [panel setAcceptsMouseMovedEvents:YES];
+    [panel setLevel:NSPopUpMenuWindowLevel];
+    [panel setDelegate:self];
 }
 
 
@@ -133,8 +135,9 @@
     NSRect windowFrame = self.window.frame;
     windowFrame.origin.x = NSMidX(itemFrame) - NSWidth(windowFrame) / 2;
     windowFrame.origin.y = NSMinY(itemFrame) - NSHeight(windowFrame) - 5.0f;
-    [self.window setFrame:windowFrame display:NO];
+    [self.window setFrame:windowFrame display:YES];
     [self.window makeKeyAndOrderFront:nil];
+    [NSApp activateIgnoringOtherApps:YES];
 }
 
 

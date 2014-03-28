@@ -8,6 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface BNGBarItemWindow : NSWindow
+@interface BNGBarItemWindow : NSPanel
 
 @end
