@@ -14,6 +14,7 @@
 
 @property (weak) IBOutlet NSTableView *tableView;
 @property (weak) IBOutlet NSTextField *statusLabel;
+@property (weak) IBOutlet NSButton *addButton;
 @property (strong) IBOutlet NSMenu *preferenceMenu;
 
 @property (assign, nonatomic) BOOL isUploading;
@@ -229,9 +230,9 @@
 - (void)setIsUploading:(BOOL)isUploading {
     _isUploading = isUploading;
     if (isUploading) {
-        //TODO: disable button
+        [self.addButton setEnabled:NO];
     } else {
-        //TODO: enable button
+        [self.addButton setEnabled:YES];
     }
 }
 

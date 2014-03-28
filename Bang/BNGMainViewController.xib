@@ -6,6 +6,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="BNGMainViewController">
             <connections>
+                <outlet property="addButton" destination="55V-G4-HSP" id="mjW-49-EP3"/>
                 <outlet property="preferenceMenu" destination="mWE-qo-mcN" id="b9f-aC-WJV"/>
                 <outlet property="statusLabel" destination="bZJ-yn-VrN" id="VPY-uM-aj7"/>
                 <outlet property="tableView" destination="RrQ-wg-rfz" id="izx-er-yBz"/>
