@@ -27,6 +27,7 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
 @property (weak) IBOutlet NSTextField   *statusLabel;
 @property (weak) IBOutlet NSButton      *addButton;
 @property (strong) IBOutlet NSMenu      *preferenceMenu;
+@property (strong) IBOutlet NSMenu      *addMenu;
 
 @property (assign, nonatomic) BOOL isUploading;
 @property (strong, nonatomic) NSMutableArray *items;
@@ -67,7 +68,7 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
     [(NSButton *)[self.preferenceMenu.itemArray objectAtIndex:0] setState:startAtLogin];
     
     // pop up menu
-    NSPoint location = [sender convertPoint:NSMakePoint(10, NSMaxY(sender.frame)) fromView:nil];
+    NSPoint location = [sender convertPoint:NSMakePoint(10, NSMaxY(sender.frame)) toView:nil];
     NSEvent *event =  [NSEvent mouseEventWithType:NSLeftMouseDown
                                          location:location
                                     modifierFlags:NSLeftMouseDownMask
@@ -84,17 +85,27 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
 }
 
 
-- (IBAction)addAction:(id)sender {
+- (IBAction)addAction:(NSButton *)sender {
     if (self.isUploading) {
         
         [self cancelUpload];
         
     } else {
-        // hide window
-        [[BNGBarItemWindowController sharedController] hideWindow];
+        // pop up menu
+        NSPoint location = [sender convertPoint:NSMakePoint(10, NSMaxY(sender.frame)) toView:nil];
+        NSEvent *event =  [NSEvent mouseEventWithType:NSLeftMouseDown
+                                             location:location
+                                        modifierFlags:NSLeftMouseDownMask
+                                            timestamp:[[NSDate date] timeIntervalSince1970]
+                                         windowNumber:[[sender window] windowNumber]
+                                              context:[[sender window] graphicsContext]
+                                          eventNumber:0
+                                           clickCount:1
+                                             pressure:1];
         
-        // capture
-        [self capture];
+        [NSMenu popUpContextMenu:self.addMenu
+                       withEvent:event
+                         forView:sender];
     }
 }
 
@@ -164,6 +175,36 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
 }
 
 
+- (IBAction)captureScheenshotAction:(id)sender {
+    // hide window
+    [[BNGBarItemWindowController sharedController] hideWindow];
+    
+    // capture
+    [self capture];
+}
+
+
+- (IBAction)shareFileAction:(id)sender {
+    // hide window
+    [[BNGBarItemWindowController sharedController] hideWindow];
+    
+    // open FileChooser
+    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+    [openPanel setCanChooseFiles:YES];
+    [openPanel setCanChooseDirectories:NO];
+    if ( [openPanel runModal] == NSOKButton )
+    {
+        NSURL *fileUrl = [[openPanel URLs] objectAtIndex:0];
+        NSString *fileType = @"file";
+        if ([[NSImage imageFileTypes] containsObject:[fileUrl pathExtension]]) {
+            fileType = @"image";
+        }
+        
+        PFFile *file = [PFFile fileWithName:[fileUrl lastPathComponent] contentsAtPath:fileUrl.relativePath];
+        [self uploadFile:file type:fileType];
+    }}
+
+
 #pragma mark - utility
 
 - (void)capture {
@@ -176,7 +217,11 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
         [task waitUntilExit];
         
         NSData* data = [[NSPasteboard generalPasteboard] dataForType: NSPasteboardTypePNG];
-        [self uploadData:data];
+        if (data != nil) {
+            NSString *fileName = [NSString stringWithFormat:@"SC%@", @((NSInteger)[[NSDate date] timeIntervalSince1970])];
+            PFFile *file = [PFFile fileWithName:fileName data:data];
+            [self uploadFile:file type:@"image"];
+        }
     }
     @catch (NSException *exception) {
         
@@ -184,19 +229,12 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
 }
 
 
-- (void)uploadData:(NSData *)data {
-    
-    if (data == nil) {
-        return;
-    }
-    
-    NSString *fileName = [NSString stringWithFormat:@"SC%@", @((NSInteger)[[NSDate date] timeIntervalSince1970])];
+- (void)uploadFile:(PFFile *)file type:(NSString *)fileType{
     
     // Upload file first
     self.isUploading = YES;
     [self updateStatus:@"Uploading.." shouldHide:NO];
 
-    PFFile *file = [PFFile fileWithName:fileName data:data];
     [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             
@@ -204,8 +242,9 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
             [self updateStatus:@"Saving.." shouldHide:NO];
 
             PFObject *screenCapture = [PFObject objectWithClassName:kParseShareTableName];
-            screenCapture[kParseShareTableTitleKey] = fileName;
+            screenCapture[kParseShareTableTitleKey] = file.name;
             screenCapture[kParseShareTableFileKey] = file;
+            screenCapture[kParseShareTableTypeKey] = fileType;
             screenCapture[kParseShareTableUserKey] = [PFUser currentUser];
             
             PFACL *acl = [PFACL ACLWithUser:[PFUser currentUser]];
@@ -307,6 +346,7 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
    
     PFObject *item = [self.items objectAtIndex:row];
     cell.nameLabel.stringValue = item[kParseShareTableTitleKey];
+    cell.nameLabel.toolTip = item[kParseShareTableTitleKey];
     cell.timeLabel.stringValue = [item.createdAt description];
     
     return cell;

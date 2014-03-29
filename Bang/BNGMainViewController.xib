@@ -7,6 +7,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="BNGMainViewController">
             <connections>
                 <outlet property="addButton" destination="55V-G4-HSP" id="mjW-49-EP3"/>
+                <outlet property="addMenu" destination="w5D-kq-LYj" id="Jgc-WK-VCo"/>
                 <outlet property="preferenceMenu" destination="mWE-qo-mcN" id="b9f-aC-WJV"/>
                 <outlet property="statusLabel" destination="bZJ-yn-VrN" id="VPY-uM-aj7"/>
                 <outlet property="tableView" destination="RrQ-wg-rfz" id="izx-er-yBz"/>
@@ -92,7 +93,7 @@
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="type-img" id="eBW-Sr-ug5"/>
                                                     </imageView>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Sm1-SQ-L7x">
-                                                        <rect key="frame" x="75" y="34" width="160" height="17"/>
+                                                        <rect key="frame" x="75" y="34" width="152" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="aoskldfjalskdjflkajdsf" id="5OG-30-BRm">
                                                             <font key="font" metaFont="system"/>
@@ -177,6 +178,22 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="quitAction:" target="-2" id="Cxs-TN-7Bk"/>
+                    </connections>
+                </menuItem>
+            </items>
+        </menu>
+        <menu id="w5D-kq-LYj">
+            <items>
+                <menuItem title="Capture Screenshot" id="6VN-cw-alG">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="captureScheenshotAction:" target="-2" id="ZCR-hb-dEQ"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Share File" id="Sbc-8A-ad6">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="shareFileAction:" target="-2" id="VUe-aO-6mU"/>
                     </connections>
                 </menuItem>
             </items>
