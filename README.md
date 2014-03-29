@@ -17,7 +17,6 @@ Set Up
 
 TODO
 ----
-* Share files
 * Edit image
 
 
