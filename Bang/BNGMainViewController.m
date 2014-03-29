@@ -110,6 +110,14 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
 }
 
 
+
+- (IBAction)itemImageAction:(id)sender {
+    NSInteger row = [self.tableView rowForView:sender];
+    PFObject *item = [self.items objectAtIndex:row];
+    PFFile *file = item[kParseShareTableFileKey];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:file.url]];
+}
+
 - (IBAction)linkAction:(id)sender {
     NSInteger row = [self.tableView rowForView:sender];
     PFObject *item = [self.items objectAtIndex:row];
@@ -338,6 +346,18 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
 }
 
 
+//TODO: not good now
+- (NSString *)formattedDataStringFromNSDate:(NSDate *)date {
+    static NSString * month[] = {@"Jan", @"Feb", @"Mar", @"Apr", @"May", @"Jun", @"Jul", @"Aug", @"Sep", @"Oct", @"Nov", @"Dec"};
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:NSMinuteCalendarUnit|NSHourCalendarUnit|NSDayCalendarUnit|NSMonthCalendarUnit
+                                               fromDate:date];
+
+    return [NSString stringWithFormat:@"%ld:%ld   %@ %ldst", components.hour, components.minute, month[components.month - 1], components.day];
+}
+
+
 #pragma mark - TableView
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
@@ -347,8 +367,8 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
     PFObject *item = [self.items objectAtIndex:row];
     cell.nameLabel.stringValue = item[kParseShareTableTitleKey];
     cell.nameLabel.toolTip = item[kParseShareTableTitleKey];
-    cell.timeLabel.stringValue = [item.createdAt description];
-    
+    cell.timeLabel.stringValue = [self formattedDataStringFromNSDate:item.createdAt];
+
     return cell;
 }
 
@@ -363,12 +383,8 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
 }
 
 
-- (void)tableViewSelectionDidChange:(NSNotification *)notification {
-    if ([self.tableView selectedRow] != -1) {
-        PFObject *item = [self.items objectAtIndex:[self.tableView selectedRow]];
-        PFFile *imageFile = item[kParseShareTableFileKey];
-        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:imageFile.url]];
-    }
+- (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row {
+    return NO;
 }
 
 @end
