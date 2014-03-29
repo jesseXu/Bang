@@ -30,6 +30,7 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
 
 @property (assign, nonatomic) BOOL isUploading;
 @property (strong, nonatomic) NSMutableArray *items;
+@property (strong, nonatomic) PFFile *uploadingFile;
 
 @end
 
@@ -84,11 +85,17 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
 
 
 - (IBAction)addAction:(id)sender {
-    // hide window
-    [[BNGBarItemWindowController sharedController] hideWindow];
-    
-    // capture
-    [self capture];
+    if (self.isUploading) {
+        
+        [self cancelUpload];
+        
+    } else {
+        // hide window
+        [[BNGBarItemWindowController sharedController] hideWindow];
+        
+        // capture
+        [self capture];
+    }
 }
 
 
@@ -189,8 +196,8 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
     self.isUploading = YES;
     [self updateStatus:@"Uploading.." shouldHide:NO];
 
-    PFFile *imageFile = [PFFile fileWithName:fileName data:data];
-    [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    PFFile *file = [PFFile fileWithName:fileName data:data];
+    [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             
             // then save object
@@ -198,7 +205,7 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
 
             PFObject *screenCapture = [PFObject objectWithClassName:kParseShareTableName];
             screenCapture[kParseShareTableTitleKey] = fileName;
-            screenCapture[kParseShareTableFileKey] = imageFile;
+            screenCapture[kParseShareTableFileKey] = file;
             screenCapture[kParseShareTableUserKey] = [PFUser currentUser];
             
             PFACL *acl = [PFACL ACLWithUser:[PFUser currentUser]];
@@ -235,6 +242,17 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
     } progressBlock:^(int percentDone) {
         [self updateStatus:[NSString stringWithFormat:@"Uploading (%d%%)", percentDone] shouldHide:NO];
     }];
+    
+    self.uploadingFile = file;
+}
+
+
+- (void)cancelUpload {
+    [self.uploadingFile cancel];
+    self.uploadingFile = nil;
+    self.isUploading = NO;
+    
+    [self updateStatus:@"Cancaled" shouldHide:YES];
 }
 
 
@@ -259,10 +277,11 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
 
 - (void)setIsUploading:(BOOL)isUploading {
     _isUploading = isUploading;
+    
     if (isUploading) {
-        [self.addButton setEnabled:NO];
+        [self.addButton.animator setFrameCenterRotation:45.0f];
     } else {
-        [self.addButton setEnabled:YES];
+        [self.addButton.animator setFrameCenterRotation:0.0f];
     }
 }
 
