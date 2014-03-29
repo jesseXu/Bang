@@ -63,6 +63,8 @@
     [panel setAcceptsMouseMovedEvents:YES];
     [panel setLevel:NSPopUpMenuWindowLevel];
     [panel setDelegate:self];
+    [panel setOpaque:NO];
+    [panel setBackgroundColor:[NSColor clearColor]];
 }
 
 
@@ -96,7 +98,12 @@
 
     NSRect windowFrame = self.window.frame;
     windowFrame.origin.y += NSHeight(windowFrame) - NSHeight(self.loginViewController.view.frame);
-    windowFrame.size.height = NSHeight(self.loginViewController.view.frame);
+    windowFrame.size.height = NSHeight(self.loginViewController.view.frame) + 10;
+    
+    // need to add 10 points since it has an extra arrow
+    windowFrame.origin.y -= 10;
+    windowFrame.size.height += 10;
+    
     [self.window setFrame:windowFrame display:YES];
     [self.welcomeView setHidden:YES];
     [self.container addSubview:self.loginViewController.view];
@@ -118,6 +125,11 @@
     NSRect windowFrame = self.window.frame;
     windowFrame.origin.y += NSHeight(windowFrame) - NSHeight(self.mainViewController.view.frame);
     windowFrame.size.height = NSHeight(self.mainViewController.view.frame);
+    
+    // need to add 10 points since it has an extra arrow
+    windowFrame.origin.y -= 10;
+    windowFrame.size.height += 10;
+    
     [self.window setFrame:windowFrame display:YES];
     [self.welcomeView setHidden:YES];
     [self.container addSubview:self.mainViewController.view];
@@ -134,7 +146,7 @@
     NSRect itemFrame = self.barItem.view.window.frame;
     NSRect windowFrame = self.window.frame;
     windowFrame.origin.x = NSMidX(itemFrame) - NSWidth(windowFrame) / 2;
-    windowFrame.origin.y = NSMinY(itemFrame) - NSHeight(windowFrame) - 5.0f;
+    windowFrame.origin.y = NSMinY(itemFrame) - NSHeight(windowFrame) - 2.0f;
     [self.window setFrame:windowFrame display:YES];
     [self.window makeKeyAndOrderFront:nil];
     [NSApp activateIgnoringOtherApps:YES];

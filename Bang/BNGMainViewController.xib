@@ -27,8 +27,8 @@
                         <button id="55V-G4-HSP">
                             <rect key="frame" x="268" y="0.0" width="32" height="32"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="AddDrop" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="bxQ-Zs-rcn">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="AddDrop" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="bxQ-Zs-rcn">
+                                <behavior key="behavior" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
@@ -38,8 +38,8 @@
                         <button id="K3n-TS-PbU">
                             <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Preferences" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="Sht-94-Ah9">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Preferences" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="Sht-94-Ah9">
+                                <behavior key="behavior" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
@@ -113,8 +113,8 @@
                                                     <button id="Tut-Xh-yj7">
                                                         <rect key="frame" x="221" y="16" width="32" height="34"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="ListItemCopy" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="ItQ-mi-5df">
-                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="ListItemCopy" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="ItQ-mi-5df">
+                                                            <behavior key="behavior" lightByContents="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
                                                         <connections>
@@ -124,8 +124,8 @@
                                                     <button id="muq-Ww-q1F">
                                                         <rect key="frame" x="255" y="16" width="32" height="34"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="ListItemTrash" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="SV7-0B-V3O">
-                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="ListItemTrash" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="SV7-0B-V3O">
+                                                            <behavior key="behavior" lightByContents="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
                                                         <connections>

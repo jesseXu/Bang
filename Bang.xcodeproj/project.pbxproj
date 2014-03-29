@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		88423A3118E7101B0060FB06 /* BNGWindowBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 88423A3018E7101B0060FB06 /* BNGWindowBorder.m */; };
 		8850D3C418E2ABB300C746CB /* BNGTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8850D3C318E2ABB300C746CB /* BNGTableCell.m */; };
 		8850D41A18E5318700C746CB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88F40CE418E1646700F21091 /* Cocoa.framework */; };
 		8850D42018E5318700C746CB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8850D41E18E5318700C746CB /* InfoPlist.strings */; };
@@ -96,6 +97,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		88423A2F18E7101B0060FB06 /* BNGWindowBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNGWindowBorder.h; sourceTree = "<group>"; };
+		88423A3018E7101B0060FB06 /* BNGWindowBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNGWindowBorder.m; sourceTree = "<group>"; };
 		8850D3C218E2ABB300C746CB /* BNGTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNGTableCell.h; sourceTree = "<group>"; };
 		8850D3C318E2ABB300C746CB /* BNGTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNGTableCell.m; sourceTree = "<group>"; };
 		8850D41918E5318700C746CB /* Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Helper.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -311,6 +314,8 @@
 				886E84E618E1A693005DB17B /* BNGStatusItem.m */,
 				8850D3C218E2ABB300C746CB /* BNGTableCell.h */,
 				8850D3C318E2ABB300C746CB /* BNGTableCell.m */,
+				88423A2F18E7101B0060FB06 /* BNGWindowBorder.h */,
+				88423A3018E7101B0060FB06 /* BNGWindowBorder.m */,
 				886E84E818E1B5A8005DB17B /* BNGBarItemWindow.h */,
 				886E84E918E1B5A8005DB17B /* BNGBarItemWindow.m */,
 				88F40D2718E1754800F21091 /* BNGBarItemWindowController.h */,
@@ -539,6 +544,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8850D3C418E2ABB300C746CB /* BNGTableCell.m in Sources */,
+				88423A3118E7101B0060FB06 /* BNGWindowBorder.m in Sources */,
 				886E84E718E1A693005DB17B /* BNGStatusItem.m in Sources */,
 				88F40CF818E1646700F21091 /* AppDelegate.m in Sources */,
 				88F0C23918E1858F0047BA81 /* BNGMainViewController.m in Sources */,
