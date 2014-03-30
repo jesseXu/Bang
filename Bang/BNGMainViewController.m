@@ -203,13 +203,29 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
     if ( [openPanel runModal] == NSOKButton )
     {
         NSURL *fileUrl = [[openPanel URLs] objectAtIndex:0];
-        NSString *fileType = @"file";
-        if ([[NSImage imageFileTypes] containsObject:[fileUrl pathExtension]]) {
-            fileType = @"image";
+        NSFileManager *fileManger = [NSFileManager defaultManager];
+        BOOL isDir;
+        if ([fileManger fileExistsAtPath:fileUrl.relativePath isDirectory:&isDir] && !isDir) {
+            
+            NSDictionary *attrs = [[NSFileManager defaultManager] attributesOfItemAtPath:fileUrl.relativePath error: NULL];
+            int64_t result = [attrs fileSize];
+            if (result < 10485760) {
+                NSString *fileType = @"file";
+                if ([[NSImage imageFileTypes] containsObject:[fileUrl pathExtension]]) {
+                    fileType = @"image";
+                }
+                
+                PFFile *file = [PFFile fileWithName:[fileUrl lastPathComponent] contentsAtPath:fileUrl.relativePath];
+                [self uploadFile:file type:fileType];
+            } else {
+                [self updateStatus:@"Sorry, File is too Large (>10M)" shouldHide:YES];
+                [[BNGBarItemWindowController sharedController] showWindow];
+            }
+            
+        } else {
+            [self updateStatus:@"Sorry, Directory is Not Allowed" shouldHide:YES];
+            [[BNGBarItemWindowController sharedController] showWindow];
         }
-        
-        PFFile *file = [PFFile fileWithName:[fileUrl lastPathComponent] contentsAtPath:fileUrl.relativePath];
-        [self uploadFile:file type:fileType];
     }}
 
 
