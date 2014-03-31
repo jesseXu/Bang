@@ -122,13 +122,7 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
     NSInteger row = [self.tableView rowForView:sender];
     PFObject *item = [self.items objectAtIndex:row];
     PFFile *file = item[kParseShareTableFileKey];
-
-    // copy url to pasteboard
-    NSPasteboard *pboard = [NSPasteboard generalPasteboard];
-    [pboard declareTypes:[NSArray arrayWithObject:NSPasteboardTypeString] owner:self];
-    if ([pboard setString:file.url forType:NSPasteboardTypeString]) {
-        [self updateStatus:@"Copied to pasteboard!" shouldHide:YES];
-    }
+    [self copyFileLinkToPasteboard:file];
 }
 
 
@@ -292,21 +286,31 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
 
                 if (succeeded) {
                     [self updateStatus:@"Done!" shouldHide:YES];
+                    
+                    // change the status bar item color
+                    [[BNGBarItemWindowController sharedController] setStatusItemHighligted:YES];
+                    
+                    // update the table view
+                    [self.tableView beginUpdates];
+                    [self.items insertObject:screenCapture atIndex:0];
+                    [self.tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+                                          withAnimation:NSTableViewAnimationSlideDown];
+                    [self.tableView endUpdates];
+                    
+                    // copy link
+                    [self copyFileLinkToPasteboard:file];
+                    
+                    // send notification
+                    NSUserNotification *notification = [[NSUserNotification alloc] init];
+                    notification.title = @"Link Copied";
+                    notification.informativeText = fileName;
+                    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+                    
                 } else {
                     [self updateStatus:[NSString stringWithFormat:@"Error:%@", error.userInfo] shouldHide:NO];
                 }
                 
                 self.isUploading = NO;
-                
-                // change the status bar item color
-                [[BNGBarItemWindowController sharedController] setStatusItemHighligted:YES];
-
-                // update the table view
-                [self.tableView beginUpdates];
-                [self.items insertObject:screenCapture atIndex:0];
-                [self.tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
-                                      withAnimation:NSTableViewAnimationSlideDown];
-                [self.tableView endUpdates];
             }];
             
         } else {
@@ -384,6 +388,15 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
                                                fromDate:date];
 
     return [NSString stringWithFormat:@"%ld:%ld   %@ %ldst", components.hour, components.minute, month[components.month - 1], components.day];
+}
+
+
+- (void)copyFileLinkToPasteboard:(PFFile *)file {
+    NSPasteboard *pboard = [NSPasteboard generalPasteboard];
+    [pboard declareTypes:[NSArray arrayWithObject:NSPasteboardTypeString] owner:self];
+    if ([pboard setString:file.url forType:NSPasteboardTypeString]) {
+        [self updateStatus:@"Copied to pasteboard!" shouldHide:YES];
+    }
 }
 
 

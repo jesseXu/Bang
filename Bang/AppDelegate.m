@@ -18,6 +18,10 @@
 //#define kParseClientKey     @"YOUR_CLIENT_KEY"
 
 
+@interface AppDelegate () <NSUserNotificationCenterDelegate>
+
+@end
+
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -36,7 +40,15 @@
     } else {
         [[BNGBarItemWindowController sharedController] changeToMainViewController];
     }
+    
+    [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
 }
 
+
+#pragma mark - NSUserNotificationCenterDelegate
+
+- (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification {
+    return YES;
+}
 
 @end
