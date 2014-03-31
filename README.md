@@ -4,7 +4,7 @@ Bang is an OS X app for file sharing, like [droplr](https://droplr.com/). Since 
 
 Have a try, download [here](http://y-d.me/Resource/Bang.zip)
 
-![](http://y-d.me/Resource/ScreenShot0.png =311x307)
+<img src="http://y-d.me/Resource/ScreenShot0.png" width="311px" height="307px" />
 
 
 Set Up
