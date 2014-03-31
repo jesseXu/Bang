@@ -212,13 +212,11 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
                 PFFile *file = [PFFile fileWithName:[fileUrl lastPathComponent] contentsAtPath:fileUrl.relativePath];
                 [self uploadFile:file name:[fileUrl lastPathComponent] type:fileType];
             } else {
-                [self updateStatus:@"Sorry, File is too Large (>10M)" shouldHide:YES];
-                [[BNGBarItemWindowController sharedController] showWindow];
+                [self updateStatus:@"Sorry, File is too Large (>10M)" isError:YES shouldHide:NO];
             }
             
         } else {
-            [self updateStatus:@"Sorry, Directory is Not Allowed" shouldHide:YES];
-            [[BNGBarItemWindowController sharedController] showWindow];
+            [self updateStatus:@"Sorry, Directory is Not Allowed" isError:YES shouldHide:NO];
         }
     }
 }
@@ -264,13 +262,13 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
     
     // Upload file first
     self.isUploading = YES;
-    [self updateStatus:@"Uploading.." shouldHide:NO];
+    [self updateStatus:@"Uploading.." isError:NO shouldHide:NO];
 
     [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             
             // then save object
-            [self updateStatus:@"Saving.." shouldHide:NO];
+            [self updateStatus:@"Saving.." isError:NO shouldHide:NO];
 
             PFObject *screenCapture = [PFObject objectWithClassName:kParseShareTableName];
             screenCapture[kParseShareTableTitleKey] = fileName;
@@ -285,11 +283,8 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
             [screenCapture saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 
                 if (succeeded) {
-                    [self updateStatus:@"Done!" shouldHide:YES];
-                    
-                    // change the status bar item color
-                    [[BNGBarItemWindowController sharedController] setStatusItemHighligted:YES];
-                    
+                    [self updateStatus:@"Done!" isError:NO shouldHide:YES];
+
                     // update the table view
                     [self.tableView beginUpdates];
                     [self.items insertObject:screenCapture atIndex:0];
@@ -307,7 +302,9 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
                     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
                     
                 } else {
-                    [self updateStatus:[NSString stringWithFormat:@"Error:%@", error.userInfo] shouldHide:NO];
+                    [self updateStatus:[NSString stringWithFormat:@"Error:%@", error.userInfo]
+                               isError:YES
+                            shouldHide:NO];
                 }
                 
                 self.isUploading = NO;
@@ -315,12 +312,14 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
             
         } else {
             
-            [self updateStatus:[NSString stringWithFormat:@"Error:%@", error.userInfo] shouldHide:NO];
+            [self updateStatus:[NSString stringWithFormat:@"Error:%@", error.userInfo]
+                       isError:YES
+                    shouldHide:NO];
             self.isUploading = NO;
 
         }
     } progressBlock:^(int percentDone) {
-        [self updateStatus:[NSString stringWithFormat:@"Uploading (%d%%)", percentDone] shouldHide:NO];
+        [self updateStatus:[NSString stringWithFormat:@"Uploading (%d%%)", percentDone] isError:NO shouldHide:NO];
     }];
     
     self.uploadingFile = file;
@@ -332,7 +331,7 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
     self.uploadingFile = nil;
     self.isUploading = NO;
     
-    [self updateStatus:@"Cancaled" shouldHide:YES];
+    [self updateStatus:@"Cancaled" isError:NO shouldHide:YES];
 }
 
 
@@ -366,7 +365,10 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
 }
 
 
-- (void)updateStatus:(NSString *)string shouldHide:(BOOL)shouldHide {
+- (void)updateStatus:(NSString *)string
+             isError:(BOOL)isError
+          shouldHide:(BOOL)shouldHide {
+    
     self.statusLabel.stringValue = string;
     
     // set @"" after 1 second
@@ -375,6 +377,11 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
         [self.statusLabel performSelector:@selector(setStringValue:)
                                withObject:@""
                                afterDelay:2.0f];
+    }
+    
+    if (isError) {
+        // highlight status bar icon
+        [[BNGBarItemWindowController sharedController] setStatusItemHighligted:YES];
     }
 }
 
@@ -395,7 +402,7 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
     NSPasteboard *pboard = [NSPasteboard generalPasteboard];
     [pboard declareTypes:[NSArray arrayWithObject:NSPasteboardTypeString] owner:self];
     if ([pboard setString:file.url forType:NSPasteboardTypeString]) {
-        [self updateStatus:@"Copied to pasteboard!" shouldHide:YES];
+        [self updateStatus:@"Copied to pasteboard!" isError:NO shouldHide:YES];
     }
 }
 
