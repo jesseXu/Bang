@@ -12,6 +12,6 @@
 
 @property (weak) IBOutlet NSTextField *nameLabel;
 @property (weak) IBOutlet NSTextField *timeLabel;
-
+@property (weak) IBOutlet NSButton *imageButton;
 
 @end

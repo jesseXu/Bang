@@ -140,6 +140,7 @@
                                                     </button>
                                                 </subviews>
                                                 <connections>
+                                                    <outlet property="imageButton" destination="pI8-dH-bfw" id="5Fp-V8-8Ec"/>
                                                     <outlet property="nameLabel" destination="Sm1-SQ-L7x" id="Kde-dz-sdo"/>
                                                     <outlet property="timeLabel" destination="QsO-EN-pP1" id="anR-oI-w2X"/>
                                                 </connections>

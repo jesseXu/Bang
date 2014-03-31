@@ -216,7 +216,7 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
                 }
                 
                 PFFile *file = [PFFile fileWithName:[fileUrl lastPathComponent] contentsAtPath:fileUrl.relativePath];
-                [self uploadFile:file type:fileType];
+                [self uploadFile:file name:[fileUrl lastPathComponent] type:fileType];
             } else {
                 [self updateStatus:@"Sorry, File is too Large (>10M)" shouldHide:YES];
                 [[BNGBarItemWindowController sharedController] showWindow];
@@ -244,7 +244,7 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
         if (data != nil) {
             NSString *fileName = [NSString stringWithFormat:@"SC%@", @((NSInteger)[[NSDate date] timeIntervalSince1970])];
             PFFile *file = [PFFile fileWithName:fileName data:data];
-            [self uploadFile:file type:@"image"];
+            [self uploadFile:file name:fileName type:@"image"];
         }
     }
     @catch (NSException *exception) {
@@ -253,7 +253,9 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
 }
 
 
-- (void)uploadFile:(PFFile *)file type:(NSString *)fileType{
+- (void)uploadFile:(PFFile *)file
+              name:(NSString *)fileName
+              type:(NSString *)fileType{
     
     // Upload file first
     self.isUploading = YES;
@@ -266,7 +268,7 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
             [self updateStatus:@"Saving.." shouldHide:NO];
 
             PFObject *screenCapture = [PFObject objectWithClassName:kParseShareTableName];
-            screenCapture[kParseShareTableTitleKey] = file.name;
+            screenCapture[kParseShareTableTitleKey] = fileName;
             screenCapture[kParseShareTableFileKey] = file;
             screenCapture[kParseShareTableTypeKey] = fileType;
             screenCapture[kParseShareTableUserKey] = [PFUser currentUser];
@@ -384,6 +386,12 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
     cell.nameLabel.stringValue = item[kParseShareTableTitleKey];
     cell.nameLabel.toolTip = item[kParseShareTableTitleKey];
     cell.timeLabel.stringValue = [self formattedDataStringFromNSDate:item.createdAt];
+    if ([item[kParseShareTableTypeKey] isEqualToString:@"image"]) {
+        [cell.imageButton setImage:[NSImage imageNamed:@"type-img"]];
+    } else {
+        [cell.imageButton setImage:[NSImage imageNamed:@"type-file"]];
+    }
+    
 
     return cell;
 }
