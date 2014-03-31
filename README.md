@@ -1,8 +1,11 @@
-Bang 
-----
-Bang is an OS X app for screenshot and small file sharing, like [droplr](https://droplr.com/). Since it uses the [Parse](https://parse.com/) for backend, you don't need to set up any server for running this app. 
+![](https://raw.github.com/jesseXu/Bang/master/Bang/Images.xcassets/AppIcon.appiconset/icon-256.png)
+
+Bang is an OS X app for file sharing, like [droplr](https://droplr.com/). Since it uses the [Parse](https://parse.com/) for backend, you don't need to set up any server for running this app. 
 
 Have a try, download [here](http://y-d.me/Resource/Bang.zip)
+
+![](http://y-d.me/Resource/ScreenShot0.png)
+
 
 Set Up
 ----
