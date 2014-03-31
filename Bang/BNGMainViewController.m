@@ -226,7 +226,18 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
             [self updateStatus:@"Sorry, Directory is Not Allowed" shouldHide:YES];
             [[BNGBarItemWindowController sharedController] showWindow];
         }
-    }}
+    }
+}
+
+
+- (IBAction)shareTextFromPasteboard:(id)sender {
+    NSData* data = [[NSPasteboard generalPasteboard] dataForType: NSPasteboardTypeString];
+    if (data != nil) {
+        NSString *fileName = [NSString stringWithFormat:@"PB%@", @((NSInteger)[[NSDate date] timeIntervalSince1970])];
+        PFFile *file = [PFFile fileWithName:fileName data:data];
+        [self uploadFile:file name:fileName type:@"file"];
+    }
+}
 
 
 #pragma mark - utility

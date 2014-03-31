@@ -191,16 +191,22 @@
         </menu>
         <menu id="w5D-kq-LYj">
             <items>
-                <menuItem title="Capture Screenshot" id="6VN-cw-alG">
+                <menuItem title="Share File" id="Sbc-8A-ad6">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="shareFileAction:" target="-2" id="VUe-aO-6mU"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Share Screenshot" id="6VN-cw-alG">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="captureScheenshotAction:" target="-2" id="ZCR-hb-dEQ"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Share File" id="Sbc-8A-ad6">
+                <menuItem title="Share text from Pasteboard" id="vHs-Dp-r1r">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="shareFileAction:" target="-2" id="VUe-aO-6mU"/>
+                        <action selector="shareTextFromPasteboard:" target="-2" id="JX8-SV-yUq"/>
                     </connections>
                 </menuItem>
             </items>
