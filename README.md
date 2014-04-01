@@ -1,10 +1,25 @@
+
+
 ![](https://raw.github.com/jesseXu/Bang/master/Bang/Images.xcassets/AppIcon.appiconset/icon-256.png)
+
+Introduction
+----
 
 Bang is an OS X app for file sharing, like [droplr](https://droplr.com/). Since it uses the [Parse](https://parse.com/) for backend, you don't need to set up any server for running this app. 
 
+
+### Features
+* Share File (< 10M currently)
+* Share Screenshot
+* Share Text From Pasteboard
+
+### Screenshot
+<img src="http://y-d.me/Resource/ScreenShot0.png" width="311px" height="307px" />
+
+
+### Download
 Have a try, download [here](http://y-d.me/Resource/Bang.zip)
 
-<img src="http://y-d.me/Resource/ScreenShot0.png" width="311px" height="307px" />
 
 
 Set Up
@@ -13,14 +28,16 @@ Set Up
 * Get the Application ID and Client Key and use them in AppDelegate.m
 
 		//#define kParseApplicationId @"YOUR_APPLICATION_ID"
-		//#define kParseClientKey     @"YOUR_CLIENT_KEY"
+		//#define kParseClientKey	 @"YOUR_CLIENT_KEY"
 
 * Build and Run
 
 
-TODO
+TODOs
 ----
+* Edit text and share
 * Edit image
+* Command line support
 
 
 Thanks
