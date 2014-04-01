@@ -237,6 +237,8 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
 - (void)capture {
     @try {
         
+        NSData* dataBefore = [[NSPasteboard generalPasteboard] dataForType: NSPasteboardTypePNG];
+        
         NSTask* task = [[NSTask alloc] init];
         [task setArguments: [NSArray arrayWithObject: @"-ic"]];
         [task setLaunchPath: @"/usr/sbin/screencapture"];
@@ -244,7 +246,7 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
         [task waitUntilExit];
         
         NSData* data = [[NSPasteboard generalPasteboard] dataForType: NSPasteboardTypePNG];
-        if (data != nil) {
+        if (data && ![data isEqualToData:dataBefore]) {
             NSString *fileName = [NSString stringWithFormat:@"SC%@", @((NSInteger)[[NSDate date] timeIntervalSince1970])];
             PFFile *file = [PFFile fileWithName:fileName data:data];
             [self uploadFile:file name:fileName type:@"image"];
@@ -270,24 +272,24 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
             // then save object
             [self updateStatus:@"Saving.." isError:NO shouldHide:NO];
 
-            PFObject *screenCapture = [PFObject objectWithClassName:kParseShareTableName];
-            screenCapture[kParseShareTableTitleKey] = fileName;
-            screenCapture[kParseShareTableFileKey] = file;
-            screenCapture[kParseShareTableTypeKey] = fileType;
-            screenCapture[kParseShareTableUserKey] = [PFUser currentUser];
+            PFObject *shareItem = [PFObject objectWithClassName:kParseShareTableName];
+            shareItem[kParseShareTableTitleKey] = fileName;
+            shareItem[kParseShareTableFileKey] = file;
+            shareItem[kParseShareTableTypeKey] = fileType;
+            shareItem[kParseShareTableUserKey] = [PFUser currentUser];
             
             PFACL *acl = [PFACL ACLWithUser:[PFUser currentUser]];
             [acl setPublicReadAccess:YES];
-            [screenCapture setACL:acl];
+            [shareItem setACL:acl];
             
-            [screenCapture saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [shareItem saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 
                 if (succeeded) {
                     [self updateStatus:@"Done!" isError:NO shouldHide:YES];
 
                     // update the table view
                     [self.tableView beginUpdates];
-                    [self.items insertObject:screenCapture atIndex:0];
+                    [self.items insertObject:shareItem atIndex:0];
                     [self.tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
                                           withAnimation:NSTableViewAnimationSlideDown];
                     [self.tableView endUpdates];
