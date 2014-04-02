@@ -10,4 +10,8 @@
 
 @interface BNGMainViewController : NSViewController
 
+- (BOOL)uploadFile:(PFFile *)file
+              name:(NSString *)fileName
+              type:(NSString *)fileType;
+
 @end

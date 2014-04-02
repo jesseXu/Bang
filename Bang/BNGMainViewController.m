@@ -258,9 +258,13 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
 }
 
 
-- (void)uploadFile:(PFFile *)file
+- (BOOL)uploadFile:(PFFile *)file
               name:(NSString *)fileName
               type:(NSString *)fileType{
+    
+    if (self.isUploading) {
+        return NO;
+    }
     
     // Upload file first
     self.isUploading = YES;
@@ -325,6 +329,7 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
     }];
     
     self.uploadingFile = file;
+    return YES;
 }
 
 
