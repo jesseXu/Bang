@@ -19,6 +19,8 @@ static NSString * const kParseShareTableUserKey         = @"User";
 static NSString * const kParseShareTableFileKey         = @"File";
 static NSString * const kParseShareTableTypeKey         = @"Type";
 static NSString * const kParseShareTableTitleKey        = @"Title";
+static NSString * const kParseShareTableShortUrlKey     = @"ShortUrl";
+
 
 
 @interface BNGMainViewController () <NSTableViewDataSource, NSTableViewDelegate>
@@ -121,8 +123,7 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
 - (IBAction)linkAction:(id)sender {
     NSInteger row = [self.tableView rowForView:sender];
     PFObject *item = [self.items objectAtIndex:row];
-    PFFile *file = item[kParseShareTableFileKey];
-    [self copyFileLinkToPasteboard:file];
+    [self copyFileLinkToPasteboard:item];
 }
 
 
@@ -276,48 +277,66 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
             // then save object
             [self updateStatus:@"Saving.." isError:NO shouldHide:NO];
 
-            PFObject *shareItem = [PFObject objectWithClassName:kParseShareTableName];
-            shareItem[kParseShareTableTitleKey] = fileName;
-            shareItem[kParseShareTableFileKey] = file;
-            shareItem[kParseShareTableTypeKey] = fileType;
-            shareItem[kParseShareTableUserKey] = [PFUser currentUser];
+            PFObject *sharedItem = [PFObject objectWithClassName:kParseShareTableName];
+            sharedItem[kParseShareTableTitleKey] = fileName;
+            sharedItem[kParseShareTableFileKey] = file;
+            sharedItem[kParseShareTableTypeKey] = fileType;
+            sharedItem[kParseShareTableUserKey] = [PFUser currentUser];
             
             PFACL *acl = [PFACL ACLWithUser:[PFUser currentUser]];
             [acl setPublicReadAccess:YES];
-            [shareItem setACL:acl];
+            [sharedItem setACL:acl];
             
-            [shareItem saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-
-                if (succeeded) {
-                    [self updateStatus:@"Done!" isError:NO shouldHide:YES];
-
-                    // update the table view
-                    [self.tableView beginUpdates];
-                    [self.items insertObject:shareItem atIndex:0];
-                    [self.tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
-                                          withAnimation:NSTableViewAnimationSlideDown];
-                    [self.tableView endUpdates];
-                    
-                    // copy link
-                    [self copyFileLinkToPasteboard:file];
-                    
-                    // send notification
-                    NSUserNotification *notification = [[NSUserNotification alloc] init];
-                    notification.title = @"Link Copied";
-                    notification.informativeText = fileName;
-                    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
-                    
-                } else {
-                    [self updateStatus:[NSString stringWithFormat:@"Error:%@", error.userInfo]
-                               isError:YES
-                            shouldHide:NO];
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                
+                // convert file url to tiny url
+                NSString *urlString = [NSString stringWithFormat:@"http://tinyurl.com/api-create.php?url=%@", [file url]];
+                NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]
+                                                         cachePolicy:NSURLCacheStorageAllowed
+                                                     timeoutInterval:5];
+                NSData *data = [NSURLConnection sendSynchronousRequest:request
+                                                     returningResponse:nil
+                                                                 error:nil];
+                if (data) {
+                    NSString *tinyUrlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    sharedItem[kParseShareTableShortUrlKey] = tinyUrlString;
                 }
                 
-                self.isUploading = NO;
-            }];
+                // save sharedItem
+                NSError *error = nil;
+                BOOL succeeded = [sharedItem save:&error];
+
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (succeeded) {
+                        [self updateStatus:@"Done!" isError:NO shouldHide:YES];
+                        
+                        // update the table view
+                        [self.tableView beginUpdates];
+                        [self.items insertObject:sharedItem atIndex:0];
+                        [self.tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+                                              withAnimation:NSTableViewAnimationSlideDown];
+                        [self.tableView endUpdates];
+                        
+                        // copy link
+                        [self copyFileLinkToPasteboard:sharedItem];
+                        
+                        // send notification
+                        NSUserNotification *notification = [[NSUserNotification alloc] init];
+                        notification.title = @"Link Copied";
+                        notification.informativeText = fileName;
+                        [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+                        
+                    } else {
+                        [self updateStatus:[NSString stringWithFormat:@"Error:%@", error.userInfo]
+                                   isError:YES
+                                shouldHide:NO];
+                    }
+                    
+                    self.isUploading = NO;
+                });
+            });
             
         } else {
-            
             [self updateStatus:[NSString stringWithFormat:@"Error:%@", error.userInfo]
                        isError:YES
                     shouldHide:NO];
@@ -405,10 +424,16 @@ static NSString * const kParseShareTableTitleKey        = @"Title";
 }
 
 
-- (void)copyFileLinkToPasteboard:(PFFile *)file {
+- (void)copyFileLinkToPasteboard:(PFObject *)item {
+    NSString *fileUrl = item[kParseShareTableShortUrlKey];
+    if (fileUrl == nil) {
+        PFFile *file = item[kParseShareTableFileKey];
+        fileUrl = file.url;
+    }
+    
     NSPasteboard *pboard = [NSPasteboard generalPasteboard];
     [pboard declareTypes:[NSArray arrayWithObject:NSPasteboardTypeString] owner:self];
-    if ([pboard setString:file.url forType:NSPasteboardTypeString]) {
+    if ([pboard setString:fileUrl forType:NSPasteboardTypeString]) {
         [self updateStatus:@"Copied to pasteboard!" isError:NO shouldHide:YES];
     }
 }
