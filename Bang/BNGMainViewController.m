@@ -420,7 +420,7 @@ static NSString * const kParseShareTableShortUrlKey     = @"ShortUrl";
     NSDateComponents *components = [calendar components:NSMinuteCalendarUnit|NSHourCalendarUnit|NSDayCalendarUnit|NSMonthCalendarUnit
                                                fromDate:date];
 
-    return [NSString stringWithFormat:@"%ld:%ld   %@ %ldst", components.hour, components.minute, month[components.month - 1], components.day];
+    return [NSString stringWithFormat:@"%ld:%ld   %@ %ld", components.hour, components.minute, month[components.month - 1], components.day];
 }
 
 
