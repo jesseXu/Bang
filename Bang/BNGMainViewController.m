@@ -267,6 +267,9 @@ static NSString * const kParseShareTableShortUrlKey     = @"ShortUrl";
     [self.textViewScrollView setHidden:NO];
     [self.textUploadButton setHidden:NO];
     [self.textCancelButton setHidden:NO];
+    
+    //let textview become first responder
+    [self.view.window makeFirstResponder:self.textViewScrollView.documentView];
 }
 
 
