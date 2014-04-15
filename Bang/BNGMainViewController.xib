@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5053"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="BNGMainViewController">
@@ -11,6 +11,10 @@
                 <outlet property="preferenceMenu" destination="mWE-qo-mcN" id="b9f-aC-WJV"/>
                 <outlet property="statusLabel" destination="bZJ-yn-VrN" id="VPY-uM-aj7"/>
                 <outlet property="tableView" destination="RrQ-wg-rfz" id="izx-er-yBz"/>
+                <outlet property="textCancelButton" destination="jBW-ef-9uf" id="hDE-ir-cYW"/>
+                <outlet property="textUploadButton" destination="omj-IP-7f8" id="wCo-qQ-dj0"/>
+                <outlet property="textView" destination="JWG-QA-q21" id="ZhH-nQ-PMO"/>
+                <outlet property="textViewScrollView" destination="Qry-YJ-3Dc" id="gty-Ab-xIV"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
@@ -57,14 +61,14 @@
                         </textField>
                     </subviews>
                 </customView>
-                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="60" horizontalPageScroll="10" verticalLineScroll="60" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="5SF-52-oID">
+                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="135" horizontalPageScroll="10" verticalLineScroll="135" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="5SF-52-oID">
                     <rect key="frame" x="0.0" y="27" width="300" height="201"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" id="Puv-hI-RaH">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="201"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="60" rowSizeStyle="automatic" viewBased="YES" id="RrQ-wg-rfz">
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="135" rowSizeStyle="automatic" viewBased="YES" id="RrQ-wg-rfz">
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="201"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -165,6 +169,58 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
+                <scrollView hidden="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="Qry-YJ-3Dc">
+                    <rect key="frame" x="0.0" y="27" width="300" height="201"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <clipView key="contentView" id="nbS-mP-Kie">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="201"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView focusRingType="none" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="JWG-QA-q21">
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="201"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="textColor" red="0.35536910076530615" green="0.35536910076530615" blue="0.35536910076530615" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="minSize" width="300" height="201"/>
+                                <size key="maxSize" width="463" height="10000000"/>
+                                <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="minSize" width="300" height="201"/>
+                                <size key="maxSize" width="463" height="10000000"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="zq6-2F-Dp4">
+                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="cN6-dk-qcA">
+                        <rect key="frame" x="284" y="0.0" width="16" height="201"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
+                <button hidden="YES" verticalHuggingPriority="750" id="omj-IP-7f8">
+                    <rect key="frame" x="235" y="5" width="57" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="recessed" title="upload" bezelStyle="recessed" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="amu-U1-ppM">
+                        <behavior key="behavior" lightByContents="YES"/>
+                        <font key="font" metaFont="systemBold" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="uploadTextAction:" target="-2" id="keZ-lG-ugl"/>
+                    </connections>
+                </button>
+                <button hidden="YES" verticalHuggingPriority="750" id="jBW-ef-9uf">
+                    <rect key="frame" x="169" y="5" width="53" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="recessed" title="cancel" bezelStyle="recessed" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="FSR-b1-ZjM">
+                        <behavior key="behavior" lightByContents="YES"/>
+                        <font key="font" metaFont="systemBold" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="cancelTextEditAction:" target="-2" id="fJ3-he-RH6"/>
+                    </connections>
+                </button>
             </subviews>
         </customView>
         <menu id="mWE-qo-mcN">
@@ -201,6 +257,12 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="captureScheenshotAction:" target="-2" id="ZCR-hb-dEQ"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Share text" id="pSQ-2K-jVk">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="shareText:" target="-2" id="6YJ-Jy-DZU"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Share text from Pasteboard" id="vHs-Dp-r1r">

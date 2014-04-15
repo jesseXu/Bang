@@ -31,6 +31,10 @@ static NSString * const kParseShareTableShortUrlKey     = @"ShortUrl";
 @property (strong) IBOutlet NSMenu      *preferenceMenu;
 @property (strong) IBOutlet NSMenu      *addMenu;
 
+@property (weak) IBOutlet NSScrollView  *textViewScrollView;
+@property (weak) IBOutlet NSButton      *textUploadButton;
+@property (weak) IBOutlet NSButton      *textCancelButton;
+
 @property (assign, nonatomic) BOOL isUploading;
 @property (strong, nonatomic) NSMutableArray *items;
 @property (strong, nonatomic) PFFile *uploadingFile;
@@ -141,6 +145,32 @@ static NSString * const kParseShareTableShortUrlKey     = @"ShortUrl";
 }
 
 
+- (IBAction)cancelTextEditAction:(id)sender {
+    NSTextView *textView = [self.textViewScrollView documentView];
+    [textView setString:@""];
+    
+    [self.textViewScrollView setHidden:YES];
+    [self.textCancelButton setHidden:YES];
+    [self.textUploadButton setHidden:YES];
+}
+
+
+- (IBAction)uploadTextAction:(id)sender {
+    NSTextView *textView = [self.textViewScrollView documentView];
+    NSString *string = textView.string;
+    if (string.length != 0) {
+        NSString *fileName = [NSString stringWithFormat:@"TC%@", @((NSInteger)[[NSDate date] timeIntervalSince1970])];
+        PFFile *file = [PFFile fileWithName:fileName data:[string dataUsingEncoding:NSUTF8StringEncoding]];
+        [self uploadFile:file name:fileName type:@"file"];
+    }
+    
+    // clear text
+    [textView setString:@""];
+    [self.textViewScrollView setHidden:YES];
+    [self.textCancelButton setHidden:YES];
+    [self.textUploadButton setHidden:YES];
+}
+
 #pragma mark - Menu Actions
 
 - (IBAction)startAtLoginAction:(id)sender {
@@ -231,6 +261,14 @@ static NSString * const kParseShareTableShortUrlKey     = @"ShortUrl";
         [self uploadFile:file name:fileName type:@"file"];
     }
 }
+
+
+- (IBAction)shareText:(id)sender {
+    [self.textViewScrollView setHidden:NO];
+    [self.textUploadButton setHidden:NO];
+    [self.textCancelButton setHidden:NO];
+}
+
 
 
 #pragma mark - utility
