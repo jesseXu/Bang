@@ -33,14 +33,13 @@ Set Up
 * Build and Run
 
 
-TODOs
-----
-* Edit text and share
-* Edit image
-* Command line support
-
 
 Thanks
 ----
 Thanks to [@eyeplum](https://twitter.com/eyeplum), he made an icon for the App.
+
+
+License
+---
+MIT license.
 
