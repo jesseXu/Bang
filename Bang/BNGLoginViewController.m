@@ -34,7 +34,10 @@
     NSString *username = self.emailTextField.stringValue;
     NSString *password = self.passwordTextField.stringValue;
     
-    //TODO: valid input
+    if (username.length == 0 || password.length == 0) {
+        self.statusLabel.stringValue = username.length == 0 ? @"Invalid Email" : @"Invalid passowrd";
+        return;
+    }
     
     PFUser *user = [PFUser user];
     user.username = username;
@@ -64,8 +67,11 @@
     NSString *username = self.emailTextField.stringValue;
     NSString *password = self.passwordTextField.stringValue;
     
-    //TODO: valid input
-  
+    if (username.length == 0 || password.length == 0) {
+        self.statusLabel.stringValue = username.length == 0 ? @"Invalid Email" : @"Invalid passowrd";
+        return;
+    }
+    
     self.statusLabel.stringValue = @"Login...";
     
     [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser *user, NSError *error) {
