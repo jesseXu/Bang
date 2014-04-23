@@ -12,6 +12,7 @@ Bang is an OS X app for file sharing, like [droplr](https://droplr.com/). Since 
 * Share File (< 10M currently)
 * Share Screenshot
 * Share Text From Pasteboard
+* Edit Text and Share
 
 ### Screenshot
 <img src="http://y-d.me/Resource/ScreenShot0.png" width="311px" height="307px" />
