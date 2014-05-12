@@ -65,6 +65,14 @@ static NSString * const kParseShareTableShortUrlKey     = @"ShortUrl";
 }
 
 
+- (void)loadView {
+    [super loadView];
+    
+    NSTextView *textView = [self.textViewScrollView documentView];
+    [textView setTextContainerInset:NSMakeSize(5, 5)];
+}
+
+
 #pragma mark - Actions
 
 - (IBAction)preferenceAction:(NSButton *)sender {
