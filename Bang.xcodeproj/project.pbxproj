@@ -209,6 +209,62 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		883D837419220BF300A28626 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				883D837719220C5000A28626 /* LoginViewController */,
+				883D837619220C2100A28626 /* MainViewController */,
+				883D837519220BFF00A28626 /* BarItemWindowController */,
+				883D837819220D2C00A28626 /* PreferenceWindowController */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		883D837519220BFF00A28626 /* BarItemWindowController */ = {
+			isa = PBXGroup;
+			children = (
+				88423A2F18E7101B0060FB06 /* BNGWindowBorder.h */,
+				88423A3018E7101B0060FB06 /* BNGWindowBorder.m */,
+				886E84E818E1B5A8005DB17B /* BNGBarItemWindow.h */,
+				886E84E918E1B5A8005DB17B /* BNGBarItemWindow.m */,
+				886E84E518E1A693005DB17B /* BNGStatusItem.h */,
+				886E84E618E1A693005DB17B /* BNGStatusItem.m */,
+				88F40D2718E1754800F21091 /* BNGBarItemWindowController.h */,
+				88F40D2818E1754800F21091 /* BNGBarItemWindowController.m */,
+				88F40D2918E1754800F21091 /* BNGBarItemWindowController.xib */,
+			);
+			name = BarItemWindowController;
+			sourceTree = "<group>";
+		};
+		883D837619220C2100A28626 /* MainViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8850D3C218E2ABB300C746CB /* BNGTableCell.h */,
+				8850D3C318E2ABB300C746CB /* BNGTableCell.m */,
+				88F0C23618E1858F0047BA81 /* BNGMainViewController.h */,
+				88F0C23718E1858F0047BA81 /* BNGMainViewController.m */,
+				88F0C23818E1858F0047BA81 /* BNGMainViewController.xib */,
+			);
+			name = MainViewController;
+			sourceTree = "<group>";
+		};
+		883D837719220C5000A28626 /* LoginViewController */ = {
+			isa = PBXGroup;
+			children = (
+				88F0C23B18E1892B0047BA81 /* BNGLoginViewController.h */,
+				88F0C23C18E1892B0047BA81 /* BNGLoginViewController.m */,
+				88F0C23D18E1892B0047BA81 /* BNGLoginViewController.xib */,
+			);
+			name = LoginViewController;
+			sourceTree = "<group>";
+		};
+		883D837819220D2C00A28626 /* PreferenceWindowController */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = PreferenceWindowController;
+			sourceTree = "<group>";
+		};
 		8850D41B18E5318700C746CB /* Helper */ = {
 			isa = PBXGroup;
 			children = (
@@ -308,25 +364,9 @@
 		88F40CEA18E1646700F21091 /* Bang */ = {
 			isa = PBXGroup;
 			children = (
+				883D837419220BF300A28626 /* Controllers */,
 				88F40CF618E1646700F21091 /* AppDelegate.h */,
 				88F40CF718E1646700F21091 /* AppDelegate.m */,
-				886E84E518E1A693005DB17B /* BNGStatusItem.h */,
-				886E84E618E1A693005DB17B /* BNGStatusItem.m */,
-				8850D3C218E2ABB300C746CB /* BNGTableCell.h */,
-				8850D3C318E2ABB300C746CB /* BNGTableCell.m */,
-				88423A2F18E7101B0060FB06 /* BNGWindowBorder.h */,
-				88423A3018E7101B0060FB06 /* BNGWindowBorder.m */,
-				886E84E818E1B5A8005DB17B /* BNGBarItemWindow.h */,
-				886E84E918E1B5A8005DB17B /* BNGBarItemWindow.m */,
-				88F40D2718E1754800F21091 /* BNGBarItemWindowController.h */,
-				88F40D2818E1754800F21091 /* BNGBarItemWindowController.m */,
-				88F40D2918E1754800F21091 /* BNGBarItemWindowController.xib */,
-				88F0C23618E1858F0047BA81 /* BNGMainViewController.h */,
-				88F0C23718E1858F0047BA81 /* BNGMainViewController.m */,
-				88F0C23818E1858F0047BA81 /* BNGMainViewController.xib */,
-				88F0C23B18E1892B0047BA81 /* BNGLoginViewController.h */,
-				88F0C23C18E1892B0047BA81 /* BNGLoginViewController.m */,
-				88F0C23D18E1892B0047BA81 /* BNGLoginViewController.xib */,
 				88F40CF918E1646700F21091 /* MainMenu.xib */,
 				88F40CFC18E1646700F21091 /* Images.xcassets */,
 				88F40CEB18E1646700F21091 /* Supporting Files */,
