@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		883D837C19220DD900A28626 /* BNGPreferenceWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 883D837A19220DD900A28626 /* BNGPreferenceWindowController.m */; };
+		883D837D19220DD900A28626 /* BNGPreferenceWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 883D837B19220DD900A28626 /* BNGPreferenceWindowController.xib */; };
 		88423A3118E7101B0060FB06 /* BNGWindowBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 88423A3018E7101B0060FB06 /* BNGWindowBorder.m */; };
 		8850D3C418E2ABB300C746CB /* BNGTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8850D3C318E2ABB300C746CB /* BNGTableCell.m */; };
 		8850D41A18E5318700C746CB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88F40CE418E1646700F21091 /* Cocoa.framework */; };
@@ -97,6 +99,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		883D837919220DD900A28626 /* BNGPreferenceWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNGPreferenceWindowController.h; sourceTree = "<group>"; };
+		883D837A19220DD900A28626 /* BNGPreferenceWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNGPreferenceWindowController.m; sourceTree = "<group>"; };
+		883D837B19220DD900A28626 /* BNGPreferenceWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BNGPreferenceWindowController.xib; sourceTree = "<group>"; };
 		88423A2F18E7101B0060FB06 /* BNGWindowBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNGWindowBorder.h; sourceTree = "<group>"; };
 		88423A3018E7101B0060FB06 /* BNGWindowBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNGWindowBorder.m; sourceTree = "<group>"; };
 		8850D3C218E2ABB300C746CB /* BNGTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNGTableCell.h; sourceTree = "<group>"; };
@@ -261,6 +266,9 @@
 		883D837819220D2C00A28626 /* PreferenceWindowController */ = {
 			isa = PBXGroup;
 			children = (
+				883D837919220DD900A28626 /* BNGPreferenceWindowController.h */,
+				883D837A19220DD900A28626 /* BNGPreferenceWindowController.m */,
+				883D837B19220DD900A28626 /* BNGPreferenceWindowController.xib */,
 			);
 			name = PreferenceWindowController;
 			sourceTree = "<group>";
@@ -543,6 +551,7 @@
 			files = (
 				88F40D2B18E1754800F21091 /* BNGBarItemWindowController.xib in Resources */,
 				88F0C23F18E1892B0047BA81 /* BNGLoginViewController.xib in Resources */,
+				883D837D19220DD900A28626 /* BNGPreferenceWindowController.xib in Resources */,
 				88F40CEF18E1646700F21091 /* InfoPlist.strings in Resources */,
 				88F40CFD18E1646700F21091 /* Images.xcassets in Resources */,
 				88F0C23A18E1858F0047BA81 /* BNGMainViewController.xib in Resources */,
@@ -589,6 +598,7 @@
 				88F40CF818E1646700F21091 /* AppDelegate.m in Sources */,
 				88F0C23918E1858F0047BA81 /* BNGMainViewController.m in Sources */,
 				88F40CF118E1646700F21091 /* main.m in Sources */,
+				883D837C19220DD900A28626 /* BNGPreferenceWindowController.m in Sources */,
 				886E84EA18E1B5A8005DB17B /* BNGBarItemWindow.m in Sources */,
 				88F0C23E18E1892B0047BA81 /* BNGLoginViewController.m in Sources */,
 				88F40D2A18E1754800F21091 /* BNGBarItemWindowController.m in Sources */,

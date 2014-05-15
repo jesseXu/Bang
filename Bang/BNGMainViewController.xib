@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
@@ -61,14 +61,14 @@
                         </textField>
                     </subviews>
                 </customView>
-                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="135" horizontalPageScroll="10" verticalLineScroll="135" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="5SF-52-oID">
+                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="60" horizontalPageScroll="10" verticalLineScroll="60" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="5SF-52-oID">
                     <rect key="frame" x="0.0" y="27" width="300" height="201"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" id="Puv-hI-RaH">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="201"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="135" rowSizeStyle="automatic" viewBased="YES" id="RrQ-wg-rfz">
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="60" rowSizeStyle="automatic" viewBased="YES" id="RrQ-wg-rfz">
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="201"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -236,6 +236,9 @@
                     <connections>
                         <action selector="signOutAction:" target="-2" id="nUu-Kd-tkN"/>
                     </connections>
+                </menuItem>
+                <menuItem title="Preference" id="yG1-72-Qkp">
+                    <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem title="Quit" tag="2" id="1zu-CP-QJe">
                     <modifierMask key="keyEquivalentModifierMask"/>
