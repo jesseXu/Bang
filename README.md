@@ -19,7 +19,7 @@ Bang is an OS X app for file sharing, like [droplr](https://droplr.com/). Since 
 
 
 ### Download
-Have a try, download [here](http://y-d.me/Resource/Bang.zip)
+Have a try, download [here](http://y-d.me/resources/Bang.zip)
 
 
 
