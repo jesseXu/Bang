@@ -1,5 +1,3 @@
-
-
 ![](https://raw.github.com/jesseXu/Bang/master/Bang/Images.xcassets/AppIcon.appiconset/icon-256.png)
 
 Introduction
@@ -15,7 +13,7 @@ Bang is an OS X app for file sharing, like [droplr](https://droplr.com/). Since 
 * Edit Text and Share
 
 ### Screenshot
-<img src="http://y-d.me/resources/ScreenShot0.png" width="313px" height="307px" />
+<img src="https://raw.github.com/jesseXu/Bang/master/ScreenShot0.png" width="313px" height="307px" />
 
 
 ### Download
